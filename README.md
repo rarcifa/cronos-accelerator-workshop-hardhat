@@ -12,12 +12,12 @@ CRONOSCAN_TESTNET_API_KEY="your_cronoscan_testnet_api_key"
 COINMARKETCAP_API="your_cointmarketcap_api_key"
 ```
 
-## !!! Be very careful with exporting your private key !!!
+## Be very careful with exporting your private key
 
 You can get your Private Key from MetaMask [like this](https://metamask.zendesk.com/hc/en-us/articles/360015289632-How-to-Export-an-Account-Private-Key).
 If you have any questions or concerns about this, please find someone you trust to sanity check you!
 
-## !!! Be very careful with exporting your private key !!!
+## Be very careful with exporting your private key
 
 Deploy your contract with:
 
