@@ -1,5 +1,5 @@
-import { BigNumber, Contract, ContractFactory } from 'ethers';
-import hre from 'hardhat';
+import { BigNumber, Contract, ContractFactory } from "ethers";
+import hre from "hardhat";
 
 const simulation = {
   /**
@@ -15,7 +15,7 @@ const simulation = {
       return hre.ethers.utils.formatEther(balanceBigInt);
     } catch (error) {
       console.log(error);
-      return '0';
+      return "0";
     }
   },
 
@@ -53,11 +53,11 @@ const simulation = {
     }[]
   ): Promise<void> {
     try {
-      for (const memo of comments) {
-        const timestamp = memo.timestamp;
-        const tipper = memo.name;
-        const tipperAddress = memo.from;
-        const message = memo.message;
+      for (const comment of comments) {
+        const timestamp = comment.timestamp;
+        const tipper = comment.name;
+        const tipperAddress = comment.from;
+        const message = comment.message;
         console.log(
           `At ${timestamp}, ${tipper} (${tipperAddress}) commented: "${message}"`
         );
@@ -75,43 +75,43 @@ const simulation = {
     try {
       const [owner, tipper, tipper2, tipper3] = await hre.ethers.getSigners();
       const TipCreator: ContractFactory = await hre.ethers.getContractFactory(
-        'TipCreator'
+        "TipCreator"
       );
       const tipCreator: Contract = await TipCreator.deploy();
 
       await tipCreator.deployed();
-      console.log('TipCreatorContract deployed to:', tipCreator.address);
+      console.log("TipCreatorContract deployed to:", tipCreator.address);
 
       const addresses: string[] = [
         owner.address,
         tipper.address,
         tipCreator.address,
       ];
-      console.log('== start ==');
+      console.log("== start ==");
       await simulation.printBalances(addresses);
 
       const tip: {
         value: BigNumber;
-      } = { value: hre.ethers.utils.parseEther('1') };
+      } = { value: hre.ethers.utils.parseEther("1") };
       await tipCreator
         .connect(tipper)
-        .tipCreator('Ric', 'Great Content, keep going', tip);
+        .tipCreator("Ric", "Great Content, keep going", tip);
       await tipCreator
         .connect(tipper2)
-        .tipCreator('Leslie', 'Love this content', tip);
+        .tipCreator("Leslie", "Love this content", tip);
       await tipCreator
         .connect(tipper3)
-        .tipCreator('Fran', 'such cool, much nice', tip);
+        .tipCreator("Fran", "such cool, much nice", tip);
 
-      console.log('== Tips ==');
+      console.log("== Tips ==");
       await simulation.printBalances(addresses);
 
       await tipCreator.connect(owner).withdrawTips();
 
-      console.log('== withdrawTips ==');
+      console.log("== withdrawTips ==");
       await simulation.printBalances(addresses);
 
-      console.log('== comments ==');
+      console.log("== comments ==");
       const comments: {
         timestamp: string;
         name: string;
